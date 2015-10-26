@@ -1,10 +1,15 @@
-var worker = require('./module');
-var callback = function(err, data){
-    if (err) {
-        return console.error(err);
-    }
-    data.forEach(function(elem){
-        console.log(elem);
-    });
-}
-worker(process.argv[2], process.argv[3], callback);
+var filterDir = require('./entry');
+
+var dirPath = process.argv[2],
+    extension = process.argv[3];
+
+filterDir(dirPath, extension, function (err, list) {
+  if (err) {
+    console.log('An error happened when reading ' + dirPath);
+    return err;
+  }
+  
+  list.forEach(function (filename) {
+    console.log(filename);
+  });
+});
